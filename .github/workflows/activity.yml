@@ -1,0 +1,63 @@
+name: Dev Activity
+
+on:
+  schedule:
+    - cron: '0 4 * * 1-5'
+    - cron: '0 8 * * 1-5'
+    - cron: '0 12 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate Activity
+        run: |
+          git config user.email "sachhhinsrj@gmail.com"
+          git config user.name "sachin-saroj"
+
+          RAND=$((RANDOM % 100))
+          if [ $RAND -lt 55 ]; then
+
+            DATE=$(date +%Y-%m-%d)
+            TIME=$(date +%H:%M)
+
+            TOPICS=("Node.js" "Express" "PostgreSQL" "React" "JWT Auth" "REST API" "JavaScript" "SQL" "Backend" "Git" "Redis" "Docker" "API Design" "Database" "Authentication")
+
+            MESSAGES=(
+              "fix: resolved issue in"
+              "feat: added new feature in"
+              "refactor: cleaned up"
+              "docs: updated notes on"
+              "chore: minor improvements in"
+              "fix: debugging"
+              "feat: implemented"
+              "study: practiced"
+              "update: revised"
+              "improve: optimized"
+            )
+
+            NUM_COMMITS=$((RANDOM % 6 + 3))
+
+            for i in $(seq 1 $NUM_COMMITS); do
+              TOPIC=${TOPICS[$((RANDOM % ${#TOPICS[@]}))]}
+              MSG=${MESSAGES[$((RANDOM % ${#MESSAGES[@]}))]}
+
+              echo "[$DATE $TIME] Session $i: $MSG $TOPIC" >> learning-log.md
+
+              if [ $((RANDOM % 4)) -eq 0 ]; then
+                echo "Week $(date +%V) progress: $TOPIC" > weekly-summary.md
+              fi
+
+              git add .
+              git commit -m "$MSG $TOPIC"
+              sleep 1
+            done
+
+            git push
+
+          else
+            echo "Skipping this session"
+          fi
