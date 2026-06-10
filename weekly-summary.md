@@ -1,1 +1,1 @@
-Week 24 progress: SQL
+Week 24 progress: Redis
