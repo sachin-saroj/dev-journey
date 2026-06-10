@@ -1,1 +1,1 @@
-Week 24 progress: REST API
+Week 24 progress: API Design
