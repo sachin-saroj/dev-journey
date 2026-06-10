@@ -1,1 +1,1 @@
-Week 24 progress: API Design
+Week 24 progress: SQL
