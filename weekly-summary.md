@@ -1,1 +1,1 @@
-Week 24 progress: JavaScript
+Week 24 progress: Git
